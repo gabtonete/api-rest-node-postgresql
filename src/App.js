@@ -6,6 +6,8 @@ const jwt = require('./middlewares/jwt');
 const swaggerUi = require('swagger-ui-express');
 const swaggerFile = require('./swagger/swagger.json');
 
+const { conectadoDb } = require('./helpers/PostgreSqlDBHelper');
+
 const LoginController = require('./controllers/LoginController');
 const UsuarioController = require('./controllers/UsuarioController');
 const TarefaController = require('./controllers/TarefaController');
@@ -21,6 +23,7 @@ class App {
 	// Função principal que dá início a tudo e configura os middlewares (index.js)
 	start() {
 		this.#setupExpress();
+		this.#conectarDb();
 		this.#loadControllers();
 		this.#startServer();
 	}
@@ -46,6 +49,10 @@ class App {
 			swaggerUi.serve,
 			swaggerUi.setup(swaggerFile)
 		);
+	}
+
+	#conectarDb = () => {
+		conectadoDb();
 	}
 
 	// Lista e carrega os controllers do programa

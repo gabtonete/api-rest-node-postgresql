@@ -1,7 +1,11 @@
 const { Sequelize } = require('sequelize');
 
-const sequelize = new Sequelize(process.env.POSTGRESQL_CONNECTION_STRING,
-            { dialect: 'postgres'});
+const sequelize = new Sequelize(process.env.POSTGRESQL_CONNECTION_STRING, { logging: false });
+
+async function conectadoDb() {
+    await sequelize.authenticate();
+    console.log("Conectado ao MySQL")
+}
 
 class PostgreSqlDBHelper {
     static async sincronizar() {
@@ -14,4 +18,4 @@ class PostgreSqlDBHelper {
     }
 }
 
-module.exports = { PostgreSqlDBHelper, sequelize };
+module.exports = { PostgreSqlDBHelper, sequelize, conectadoDb };
