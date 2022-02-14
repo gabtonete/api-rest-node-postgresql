@@ -1,6 +1,6 @@
 const { Sequelize } = require('sequelize');
 
-const sequelize = new Sequelize('postgres://glvqurth:T71ez0m40BJaH0YiQGjoXD_7nayJl9qh@kesavan.db.elephantsql.com/glvqurth',
+const sequelize = new Sequelize(process.env.POSTGRESQL_CONNECTION_STRING,
             { dialect: 'postgres'});
 
 class PostgreSqlDBHelper {
