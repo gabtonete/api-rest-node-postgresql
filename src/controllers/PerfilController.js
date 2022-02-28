@@ -3,7 +3,7 @@ const HttpController = require('./HttpController');
 
 class PerfilController extends HttpController {
     setupRoutes(baseUrl) {
-        this.express.post(`${baseUrl}/perfil`, this.deletarPerfil.bind(this));
+        this.express.delete(`${baseUrl}/perfil`, this.deletarPerfil.bind(this));
     }
 
     async deletarPerfil(req, res) {

@@ -29,7 +29,7 @@ class LoginController extends HttpController {
             const resultado = await service.logar(body.login, body.senha);
 
             if (resultado == null) {
-                res.status(400).json({
+                return res.status(400).json({
                     erro: "Login ou senha inválidos",
                     status: 400
                 });

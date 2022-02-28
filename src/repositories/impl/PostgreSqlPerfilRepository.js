@@ -1,16 +1,18 @@
+const { PostgreSqlDBHelper } = require('../../helpers/PostgreSqlDBHelper');
 const PerfilRepository = require('../PerfilRepository');
 const Usuario = require('../../models/Usuario');
 const md5 = require('md5')
 
+function sincronizar() {
+    PostgreSqlDBHelper.sincronizar();
+}
+
 class PostgreSqlPerfilRepository {
     static async deletarPorIdESenha(filtro, senhaFiltro) {
-
-        console.log(filtro);
+        sincronizar();
+        
         const usuarioDb = await Usuario.findOne({ where: {id: filtro} })
-        console.log(usuarioDb);
-
         const senhaCodificada = md5(senhaFiltro);
-        console.log(senhaCodificada);
 
         if (senhaCodificada === usuarioDb.senha) {
             await Usuario.destroy({ where: { id: filtro } });
@@ -18,8 +20,6 @@ class PostgreSqlPerfilRepository {
         } else {
             return { msg:"Senha incorreta, tente novamente" }
         }
-
-        
     }
 }
 
