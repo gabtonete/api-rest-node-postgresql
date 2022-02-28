@@ -5,10 +5,10 @@ class TarefaService {
         this.idUsuario = idUsuario;
     }
 
-    /*async listar(filtro = {}) {
-        filtro.idUsuario = this.idUsuario;
-        return TarefaRepository.filtrar(filtro);
-    }*/
+    async listar() {
+        const listaTarefas = await TarefaRepository.listarTarefas(this.idUsuario);
+        return listaTarefas;
+    }
 
     async cadastrar(dados) {
         const erros = [];
@@ -52,13 +52,12 @@ class TarefaService {
         return resposta;
     }
 
-    /*async editar(id, dados) {
+    async editar(idTarefa, dados) {
         const erros = [];
-        if (!id) {
+        if (!idTarefa) {
             erros.push("ID da tarefa é obrigatório")
         } else {
-            const tarefaBD = await TarefaRepository.buscarPorId(id);
-            console.log(tarefaBD);
+            const tarefaBD = await TarefaRepository.buscarPorId(idTarefa);
             if (!tarefaBD || tarefaBD.idUsuario !== this.idUsuario) {
                 erros.push('Tarefa não encontrada')
             }
@@ -75,33 +74,27 @@ class TarefaService {
         }
 
         const dadosAtualizar = {};
+
         if (dados.nome && dados.nome.trim()) {
             dadosAtualizar.nome = dados.nome;
         }
-
         if (dados.dataPrevistaConclusao && dados.dataPrevistaConclusao.trim()) {
             dadosAtualizar.dataPrevistaConclusao = new Date(dados.dataPrevistaConclusao)
         }
-
-        if (dados.dataConclusao != null) {
-            dadosAtualizar.dataConclusao = new Date(dados.dataConclusao.trim())
+        if (dados.dataConclusao != null && dados.dataConclusao.trim()) {
+            dadosAtualizar.dataConclusao = new Date(dados.dataConclusao)
         }
 
-        console.log(dadosAtualizar);
-
-        const tarefaEditada = await TarefaRepository.editar(id, dadosAtualizar);
-
-        console.log(tarefaEditada);
-
+        const tarefaEditada = await TarefaRepository.editarTarefa(idTarefa, dadosAtualizar);
         return tarefaEditada;
     }
 
-    async deletar(id) {
+    async deletar(idTarefa) {
         const erros = [];
-        if (!id) {
+        if (!idTarefa) {
             erros.push("ID da tarefa é obrigatório")
         } else {
-            const tarefaBD = await TarefaRepository.buscarPorId(id);
+            const tarefaBD = await TarefaRepository.buscarPorId(idTarefa);
             if (!tarefaBD || tarefaBD.idUsuario !== this.idUsuario) {
                 erros.push('Tarefa não encontrada')
             }
@@ -111,11 +104,11 @@ class TarefaService {
         if (erros.length) {
             resposta.erros = erros;
         } else {
-            await TarefaRepository.deletar(id);
+            await TarefaRepository.deletarTarefa(idTarefa);
         }
 
         return resposta;
-    }*/
+    }
 }
 
 module.exports = TarefaService;

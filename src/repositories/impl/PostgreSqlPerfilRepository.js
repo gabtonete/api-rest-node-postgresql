@@ -3,10 +3,6 @@ const Usuario = require('../../models/Usuario');
 const md5 = require('md5')
 
 class PostgreSqlPerfilRepository {
-    static async buscarUsuario(nomeBody) { 
-        return await Usuario.findAll({ where: {nome: nomeBody} })
-    }
-
     static async deletarPorIdESenha(filtro, senhaFiltro) {
 
         console.log(filtro);

@@ -1,12 +1,9 @@
 const PerfilRepository = require("../repositories/impl/PostgreSqlPerfilRepository");
 
 class PerfilService {
-    buscarPerfil(usuarioNome) {
-        return PerfilRepository.buscarUsuario(usuarioNome)
-    }
     deletarPerfil(idLogado, senhaBody) {
-
         const erros = []
+        
         if(!idLogado) {
             erros.push("ID do usuário obrigatória")
             return { erros }

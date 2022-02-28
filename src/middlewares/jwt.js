@@ -14,10 +14,6 @@ const rotasPublicas = [
     {
         url: '/api/usuario',
         method: 'POST'
-    },
-    {
-        url: '/api/buscar',
-        method: 'POST'
     }
 ];
 
@@ -33,13 +29,10 @@ module.exports = (req, res, next) => {
                 && req.url.indexOf(rota.url.replace('*', '')) !== -1
             )
         )
-        && (
-            rota.method === req.method.toUpperCase()
-            || req.method.toUpperCase() === 'OPTIONS'
-        )
+        && (rota.method === req.method.toUpperCase())
     )
 
-    if (rotaPublica) {
+    if (rotaPublica || req.method.toUpperCase() === 'OPTIONS') {
         req.logger.info('rota pública, acesso liberado');
         return next();
     }

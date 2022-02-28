@@ -26,11 +26,6 @@ class LoginController extends HttpController {
             // na const service, instanciamos um objeto LoginService(), pois ele possuirá os métodos dessa classe
             const service = new LoginService();
 
-            // Na const resultado guardamos o resultado do método logar passando como parâmetros login e senha recebidos no body
-            // O service fará a regra de negócio que irá acionar o repository para buscar no banco de dados e confirmar se o login e senha existem
-            // e se fazem parte da mesma tabela
-            // Caso faça, ele irá buscar os dados relevantes para nós como ID, nome e email, e também gerará um token
-            // devolvendo para essa variável esses 4 dados
             const resultado = await service.logar(body.login, body.senha);
 
             if (resultado == null) {
@@ -42,7 +37,6 @@ class LoginController extends HttpController {
 
             req.logger.info('requisição de login realizada com sucesso', `resultado=${JSON.stringify(resultado)}`);
             
-            // Por fim devolve os dados do banco no res e mostra sucesso.
             res.json(resultado);
 
         } catch (e) {
